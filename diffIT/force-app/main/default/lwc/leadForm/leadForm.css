@@ -1,0 +1,7 @@
+.dummy{
+	color : black;
+}
+.disabled {
+	opacity: 1;
+  	pointer-events:none;
+}
