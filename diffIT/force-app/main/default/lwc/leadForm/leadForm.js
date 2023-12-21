@@ -34,7 +34,7 @@ export default class LeadForm extends LightningElement {
 
   validateZipChange(evt) {
     this.zipCode = evt.target.value;
-    let pattern = /[0-9]{6}/g;
+    let pattern = /[0-9]{5}/g;
     if(this.zipCode.match(pattern)){
       this.template.querySelector('c-lwc-lookup').classList.remove('disabled');
     }
