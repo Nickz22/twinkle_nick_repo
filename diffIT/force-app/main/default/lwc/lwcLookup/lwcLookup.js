@@ -1,5 +1,5 @@
 import { LightningElement, track, wire, api } from "lwc";  
-import findRecords from "@salesforce/apex/LeadController.findRecords";
+import findRecords from "@salesforce/apex/ContactController.findRecords";
 export default class LwcLookup extends LightningElement {
   @track recordsList;   
   @track searchKey = "";  
@@ -10,7 +10,7 @@ export default class LwcLookup extends LightningElement {
   @api disable;  
   @api lookupLabel;  
   @track message;  
-  @api zipCode;
+  @api institutions;
     
   onLeave(event) {  
    setTimeout(() => {  
@@ -18,6 +18,14 @@ export default class LwcLookup extends LightningElement {
     this.recordsList = null;  
    }, 300);  
   }  
+
+  @api
+  clearSelection(){
+    console.log("selected Value",this.selectedValue);
+    this.selectedRecordId = "";
+    this.selectedValue = "";
+    this.searchKey = "";  
+  }
     
   onRecordSelection(event) {  
    this.selectedRecordId = event.target.dataset.key;  
@@ -43,7 +51,10 @@ export default class LwcLookup extends LightningElement {
  }  
 
   getLookupResult() {  
-   findRecords({ searchKey: this.searchKey, objectName : this.objectApiName, zipCode : this.zipCode })  
+    console.log('institutions'+this.institutions);
+    console.log('type',typeof this.institutions);
+
+   findRecords({ searchKey: this.searchKey, objectName : this.objectApiName, institutions : this.institutions })  
     .then((result) => {  
      if (result.length===0) {  
        this.recordsList = [];  
@@ -60,7 +71,8 @@ export default class LwcLookup extends LightningElement {
     });  
   }  
    
-  onSeletedRecordUpdate(){  
+  onSeletedRecordUpdate(){
+    console.log("record selected")  
    const passEventr = new CustomEvent('recordselection', {  
      detail: { selectedRecordId: this.selectedRecordId, selectedValue: this.selectedValue }  
     });  
