@@ -34,13 +34,15 @@ export default class LeadForm extends LightningElement {
 
   validateZipChange(evt) {
     this.zipCode = evt.target.value;
-    let pattern = /[0-9]{5}/g;
-    if(this.zipCode.match(pattern)){
+    this.template.querySelector('c-lwc-lookup').clearSelection();
+    if(/^(\d{5})$/.test(this.zipCode)){
       this.template.querySelector('c-lwc-lookup').classList.remove('disabled');
+    }else{
+      this.template.querySelector('c-lwc-lookup').classList.add('disabled');
     }
   }
 
-  handleSave() {
+  saveLead() {
     const inputValues = this.template.querySelectorAll('lightning-input');
     inputValues.forEach(element => {
       const label = element.label;

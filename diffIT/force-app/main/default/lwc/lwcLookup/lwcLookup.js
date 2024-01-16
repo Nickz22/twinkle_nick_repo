@@ -18,6 +18,14 @@ export default class LwcLookup extends LightningElement {
     this.recordsList = null;  
    }, 300);  
   }  
+
+  @api
+  clearSelection(){
+    console.log("selected Value",this.selectedValue);
+    this.selectedRecordId = "";
+    this.selectedValue = "";
+    this.searchKey = "";  
+  }
     
   onRecordSelection(event) {  
    this.selectedRecordId = event.target.dataset.key;  
