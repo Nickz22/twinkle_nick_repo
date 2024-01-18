@@ -1,11 +1,21 @@
 import { LightningElement, track } from 'lwc';
-import createRecords from "@salesforce/apex/ContactController.createRecords";
-import getInstitutionCities from "@salesforce/apex/ContactController.getInstitutionCities";
+import createRecord from "@salesforce/apex/ContactFormController.createContactRecord";
+import getInstitutionCities from "@salesforce/apex/ContactFormController.getInstitutionCities";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from "lightning/navigation";
 import IMAGE from "@salesforce/resourceUrl/DiffIt_Logo";
+import RequestQouteLabel from '@salesforce/label/c.Request_Quote_Heading';
+import {getConstants} from './util';
+
+const CONSTANTS = getConstants();
 
 export default class ContactForm  extends NavigationMixin( LightningElement) {
+
+  label = {
+    RequestQouteLabel
+  };
+
+  constants = CONSTANTS;
   companyLogo = IMAGE;
   @track accountName;
   @track accountRecordId;
@@ -22,39 +32,39 @@ export default class ContactForm  extends NavigationMixin( LightningElement) {
 
   get schoolOptions() {
     return [
-      { label: 'One School', value: 'One School' },
-      { label: 'Multiple Schools', value: 'Multiple Schools' },
+      { label: CONSTANTS.ONE_SCHOOL, value: CONSTANTS.ONE_SCHOOL },
+      { label: CONSTANTS.MULTIPLE_SCHOOLS, value: CONSTANTS.MULTIPLE_SCHOOLS },
     ];
   }
   get purchaseOptions() {
     return [
-      { label: 'Entire District', value: 'Entire District' },
-      { label: 'Certain Schools', value: 'Certain Schools' },
+      { label: CONSTANTS.ENTIRE_DISTRICT, value:CONSTANTS.ENTIRE_DISTRICT  },
+      { label: CONSTANTS.CERTAIN_SCHOOL, value: CONSTANTS.CERTAIN_SCHOOL },
     ];
   }
   get lookupLabel() {
-    return (this.checkForOneSchool) ? 'Search School' : 'Search District';
+    return (this.isSingleSchool) ? CONSTANTS.SEARCH_SCHOOL : CONSTANTS.SEARCH_DISTRICT;
   }
-  get checkForSchoolEnrollment(){
-    return this.checkForOneSchool && !this.accountRecordId;
+  get isSingleSchoolSelected(){
+    return this.isSingleSchool && !this.accountRecordId;
   }
 
-  get checkForOneSchool() {
-    return this.schoolRadioValue === 'One School';
+  get isSingleSchool() {
+    return this.schoolRadioValue === CONSTANTS.ONE_SCHOOL;
   }
   get checkForMultipleSchool() {
-    return this.schoolRadioValue === 'Multiple Schools';
+    return this.schoolRadioValue === CONSTANTS.MULTIPLE_SCHOOLS;
   }
   get showLookup() {
-    return this.checkForOneSchool || this.checkForMultipleSchool;
+    return this.isSingleSchool || this.checkForMultipleSchool;
   }
   get showSchoolsCount(){
-    return this.purchaseType == 'Certain Schools';
+    return this.purchaseType == CONSTANTS.CERTAIN_SCHOOL;
   }
   onAccountSelection(event) {
     this.accountName = event.detail.selectedValue;
     this.accountRecordId = event.detail.selectedRecordId;
-    this.formValues['AccountId'] = this.accountRecordId;
+    this.formValues[CONSTANTS.ACCOUNT_ID] = this.accountRecordId;
     this.showPurchaseOptions = (this.checkForMultipleSchool) ? true : false;
 
   }
@@ -63,16 +73,16 @@ export default class ContactForm  extends NavigationMixin( LightningElement) {
     this.schoolRadioValue = evt.target.value;
     this.showEnrollment = false;
     this.showPurchaseOptions = false;
-    if (this.schoolRadioValue == 'One School') {
+    if (this.schoolRadioValue == CONSTANTS.ONE_SCHOOL) {
       if (this.cityOptions.length == 0) {
         this.getCities();
       }
-      this.institutions = ['Public School', 'Charter School', 'Private School'];
+      this.institutions = [CONSTANTS.PUBLIC_SCHOOL, CONSTANTS.CHARTER_SCHOOL, CONSTANTS.PRIVATE_SCHOOL];
     } else {
-      this.institutions = ['Public District'];
+      this.institutions = [CONSTANTS.PUBLIC_DISTRICT];
     }
     this.formValues = {};
-    this.formValues['Contract_Type__c'] = this.schoolRadioValue;
+    this.formValues[CONSTANTS.CONTRACT_TYPE] = this.schoolRadioValue;
     this.template.querySelector('c-lwc-lookup').clearSelection();
   }
 
@@ -88,7 +98,7 @@ export default class ContactForm  extends NavigationMixin( LightningElement) {
       const value = element.value;
       this.formValues[label] = value;
     })
-    createRecords({ contactRecord: this.formValues }).then((result) => {
+    createRecord({ contactRecord: this.formValues }).then((result) => {
       const event = new ShowToastEvent({
             title: 'Success',
             message:
@@ -112,7 +122,7 @@ export default class ContactForm  extends NavigationMixin( LightningElement) {
 
   handleCityChange(event) {
     this.selectedCity = event.target.value;
-    this.formValues['MailingCity'] = this.selectedCity;
+    this.formValues[CONSTANTS.MAILING_CITY] = this.selectedCity;
   }
 
   handlePurchaseChange(event){

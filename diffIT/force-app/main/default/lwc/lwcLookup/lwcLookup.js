@@ -1,5 +1,5 @@
 import { LightningElement, track, wire, api } from "lwc";  
-import findRecords from "@salesforce/apex/ContactController.findRecords";
+import findRecords from "@salesforce/apex/ContactFormController.findRecords";
 export default class LwcLookup extends LightningElement {
   @track recordsList;   
   @track searchKey = "";  
@@ -21,7 +21,6 @@ export default class LwcLookup extends LightningElement {
 
   @api
   clearSelection(){
-    console.log("selected Value",this.selectedValue);
     this.selectedRecordId = "";
     this.selectedValue = "";
     this.searchKey = "";  
@@ -51,9 +50,6 @@ export default class LwcLookup extends LightningElement {
  }  
 
   getLookupResult() {  
-    console.log('institutions'+this.institutions);
-    console.log('type',typeof this.institutions);
-
    findRecords({ searchKey: this.searchKey, objectName : this.objectApiName, institutions : this.institutions })  
     .then((result) => {  
      if (result.length===0) {  
@@ -72,7 +68,6 @@ export default class LwcLookup extends LightningElement {
   }  
    
   onSeletedRecordUpdate(){
-    console.log("record selected")  
    const passEventr = new CustomEvent('recordselection', {  
      detail: { selectedRecordId: this.selectedRecordId, selectedValue: this.selectedValue }  
     });  
