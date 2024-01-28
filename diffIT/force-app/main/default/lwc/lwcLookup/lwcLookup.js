@@ -11,6 +11,7 @@ export default class LwcLookup extends LightningElement {
   @api lookupLabel;  
   @track message;  
   @api institutions;
+  @api coordinates;
     
   onLeave(event) {  
    setTimeout(() => {  
@@ -50,7 +51,7 @@ export default class LwcLookup extends LightningElement {
  }  
 
   getLookupResult() {  
-   findRecords({ searchKey: this.searchKey, objectName : this.objectApiName, institutions : this.institutions })  
+   findRecords({ searchKey: this.searchKey, objectName : this.objectApiName, institutions : this.institutions, coordinates : this.coordinates })  
     .then((result) => {  
      if (result.length===0) {  
        this.recordsList = [];  

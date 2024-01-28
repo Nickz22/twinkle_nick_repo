@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Role__c</fullName>
+    <fullName>Form_Submission_Contract_Type__c</fullName>
+    <description>Populates from form submission.</description>
     <externalId>false</externalId>
-    <label>Role</label>
+    <label>Form Submission: Contract Type</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
@@ -11,24 +12,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Teacher</fullName>
+                <fullName>District</fullName>
                 <default>false</default>
-                <label>Teacher</label>
+                <label>District</label>
             </value>
             <value>
-                <fullName>Coach</fullName>
+                <fullName>School</fullName>
                 <default>false</default>
-                <label>Coach</label>
-            </value>
-            <value>
-                <fullName>Principal</fullName>
-                <default>false</default>
-                <label>Principal</label>
-            </value>
-            <value>
-                <fullName>District Leader</fullName>
-                <default>false</default>
-                <label>District Leader</label>
+                <label>School</label>
             </value>
             <value>
                 <fullName>Other</fullName>
