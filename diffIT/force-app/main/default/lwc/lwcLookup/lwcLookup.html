@@ -1,9 +1,8 @@
 <template>  
    <div class="slds-form-element">  
-     <label class="slds-form-element__label" for="combobox-id-2">{lookupLabel}</label>  
      <div class="slds-form-element__control">  
        <div class="slds-combobox_container">  
-         <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">  
+         <div class="slds-combobox no-border-radius slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">  
            <template if:true={selectedValue}>  
            <div data-key="pilldiv" class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right" role="none">  
              <span class="slds-icon_container slds-icon-standard-account slds-combobox__input-entity-icon" title="object">  
@@ -12,7 +11,7 @@
               </div>  
               <span class="slds-assistive-text">Record</span>  
              </span>  
-             <input type="text" class="slds-input slds-combobox__input slds-combobox__input-value" id="combobox-id-5" aria-controls="listbox-id-5" role="textbox" placeholder="Select an Option" readonly value={selectedValue} />  
+             <input type="text" class="slds-input no-border-radius slds-combobox__input slds-combobox__input-value" id="combobox-id-5" aria-controls="listbox-id-5" role="textbox" placeholder="Select an Option" readonly value={selectedValue} />  
              <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" onclick={removeRecordOnLookup}  
              title="Remove selected option">  
               <span class="slds-button__icon" aria-hidden="true" >  

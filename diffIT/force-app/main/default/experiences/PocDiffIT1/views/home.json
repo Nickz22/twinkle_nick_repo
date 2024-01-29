@@ -11,8 +11,8 @@
   }, {
     "components" : [ {
       "componentAttributes" : { },
-      "componentName" : "c:leadForm",
-      "id" : "154da31b-c617-4c51-9fbb-1e777155c6e5",
+      "componentName" : "c:contactForm",
+      "id" : "2147504d-cc0f-45a6-8fb6-50d8231aa46c",
       "renderPriority" : "NEUTRAL",
       "renditionMap" : { },
       "type" : "component"
