@@ -14,5 +14,4 @@ public class GoogleAPICallout {
         }
         return geocodeResponse;
     }
-
 }
